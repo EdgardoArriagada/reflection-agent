@@ -31,3 +31,26 @@ def should_continue(state: List[BaseMessage]):
     if len(state) > 6:
         return END
     return REFLECT
+
+
+builder.add_conditional_edges(GENERATE, should_continue)
+builder.add_edge(REFLECT, GENERATE)
+
+graph = builder.compile()
+print(graph.get_graph().draw_mermaid())
+
+if __name__ == "__main__":
+    print("Starting the message graph...")
+
+    inputs = HumanMessage(
+        content="""Make this tweet better:
+                          @LangChainAI
+                          - newly Tool Calling feature is serioutly uderrated.
+
+                          After a long wait. it's here - making the implementation of agents across different models with function calling - super easy.
+
+                          Made a video covering their newest blog post
+
+                          """
+    )
+    response = graph.invoke(inputs)
