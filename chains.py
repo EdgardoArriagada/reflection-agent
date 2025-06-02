@@ -23,3 +23,7 @@ generation_prompt = ChatPromptTemplate.from_messages(
         MessagesPlaceholder(variable_name="messages"),
     ]
 )
+
+llm = ChatOpenAI()
+generate_chain = generation_prompt | llm
+reflection_chain = generation_prompt | llm
